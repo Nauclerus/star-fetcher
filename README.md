@@ -94,6 +94,17 @@ attaches `star-fetcher-X.Y.Z.gem` to the GitHub release for that tag (creating
 the release if it does not exist). It can also be run manually from the Actions
 tab.
 
+## Development
+
+Run the test suite with:
+
+```console
+$ rake test
+```
+
+CI runs it on Ruby 3.4 and 4.0 — see
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
 ## Credits
 
 The ASCII artwork is sourced from the excellent
