@@ -12,6 +12,26 @@ It is the fetching component used by
 - Ruby 3.4 or newer (tested on 4.0) — stdlib only, no gems
 - Linux with `/proc` and `/etc/os-release`
 
+## Installation
+
+### From a release (recommended)
+
+Download the latest `star-fetcher-<version>.gem` from the
+[releases page](https://github.com/Nauclerus/star-fetcher/releases), then:
+
+```console
+$ gem install ./star-fetcher-0.1.0.gem
+```
+
+### From source
+
+```console
+$ git clone https://github.com/Nauclerus/star-fetcher.git
+$ cd star-fetcher
+$ gem build star-fetcher.gemspec
+$ gem install ./star-fetcher-0.1.0.gem
+```
+
 ## Usage
 
 ```console
