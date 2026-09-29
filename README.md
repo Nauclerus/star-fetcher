@@ -81,6 +81,19 @@ artwork at any time with:
 $ scripts/scrape-ascii.sh
 ```
 
+## Releasing
+
+Versioning lives in [`lib/star_fetcher/version.rb`](lib/star_fetcher/version.rb).
+To publish a new gem:
+
+1. Bump `StarFetcher::VERSION` and commit it to `main`.
+2. Create and push a matching tag, e.g. `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+The [`release`](.github/workflows/release.yml) workflow then builds the gem and
+attaches `star-fetcher-X.Y.Z.gem` to the GitHub release for that tag (creating
+the release if it does not exist). It can also be run manually from the Actions
+tab.
+
 ## Credits
 
 The ASCII artwork is sourced from the excellent

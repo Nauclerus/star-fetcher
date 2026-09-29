@@ -1,0 +1,44 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  gem:
+    name: Build and publish gem
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+
+      - name: Build gem
+        run: gem build star-fetcher.gemspec
+
+      - name: Publish release with gem asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(ruby -Ilib -e 'require "star_fetcher/version"; print StarFetcher::VERSION')
+          tag="v${version}"
+
+          if [ "${GITHUB_REF_TYPE:-}" = "tag" ] && [ "${GITHUB_REF_NAME}" != "${tag}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match version ${tag} in lib/star_fetcher/version.rb" >&2
+            exit 1
+          fi
+
+          if ! gh release view "${tag}" >/dev/null 2>&1; then
+            gh release create "${tag}" --title "star-fetcher ${tag}" --generate-notes
+          fi
+
+          gh release upload "${tag}" star-fetcher-*.gem --clobber
